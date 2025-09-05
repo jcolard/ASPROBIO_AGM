@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         { // Quiz 2: Acteur de l'environnement
-            title: "Soit l’acteur principal de la protection de ton environnement",
+            title: "Sois l’acteur principal de la protection de ton environnement",
             questions: [
                 { q: "Quelle espèce est en voie de disparition à travers le monde ?", a: [
                     { t: "Le rhinocéros de Java", c: true, imageUrl: "https://picsum.photos/seed/rhino-java/200/200" }, // Image: Un rhinocéros de Java.
