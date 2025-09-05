@@ -3,20 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Interactif</title>
+    <title>Apprendre l'Environnement</title>
+    
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz">
-        <div class="quiz-header">
-            <img id="question-image" src="" alt="Image de la question">
-            <h2 id="question-text">Question en cours de chargement...</h2>
-        </div>
-        <ul id="answer-buttons">
-            </ul>
-        <button id="next-button">Suivant</button>
-    </div>
+    <header>
+        <h1>Apprends en t'amusant !</h1>
+        <button id="back-to-menu" class="hidden">Revenir au menu</button>
+    </header>
+
+    <main>
+        <section id="main-menu">
+            <h2>Choisis un module pour commencer</h2>
+            <div class="gallery">
+                <div class="module-card" data-quiz-index="0">
+                    <img src="https://picsum.photos/seed/ecosystem/400/300" alt="Module 1">
+                    <p>Je Maîtrise les concepts afin de mieux agir pour l'environnement</p>
+                </div>
+                <div class="module-card" data-quiz-index="1">
+                    <img src="https://picsum.photos/seed/planet/400/300" alt="Module 2">
+                    <p>Je Deviens un as sur la protection de l'environnement et les changements climatiques</p>
+                </div>
+                <div class="module-card" data-quiz-index="2">
+                    <img src="https://picsum.photos/seed/planting/400/300" alt="Module 3">
+                    <p>Soit l’acteur principal de la protection de ton environnement</p>
+                </div>
+                <div class="module-card" data-quiz-index="3">
+                    <img src="https://picsum.photos/seed/action/400/300" alt="Module 4">
+                    <p>Je deviens acteur de l'environnement</p>
+                </div>
+                <div class="module-card" data-quiz-index="4">
+                    <img src="https://picsum.photos/seed/convention/400/300" alt="Module 5">
+                    <p>Que disent les conventions sur l'environnement ?</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-view" class="hidden">
+            <h2 id="quiz-title">Titre du Quiz</h2>
+            <div id="question-container">
+                <p id="question-text">Ici s'affichera la question...</p>
+            </div>
+            <div id="answers-container">
+                </div>
+            <button id="next-btn" class="hidden">Suivant</button>
+        </section>
+
+        <section id="score-view" class="hidden">
+            <h2>Quiz terminé !</h2>
+            <p>Ton score est de :</p>
+            <p id="final-score">0 / 0</p>
+            <button id="restart-btn">Recommencer ce quiz</button>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
