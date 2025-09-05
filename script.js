@@ -5,32 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Je Maîtrise les concepts",
             questions: [
                 { q: "L'écosystème est formé par :", a: [
-                    { t: "La biocénose et le biotope", c: true, imageUrl: "https://picsum.photos/seed/biocenose/200/200" }, // Image: Interaction animaux/végétaux et leur milieu (roche, eau).
-                    { t: "La pollution et l'air", c: false, imageUrl: "https://picsum.photos/seed/pollution/200/200" } // Image: Fumée d'usine.
+                    { t: "La biocénose et le biotope", c: true, imageUrl: "https://images.pexels.com/photos/1125979/pexels-photo-1125979.jpeg" }, // Image: Interaction animaux/végétaux et leur milieu (roche, eau).
+                    { t: "La pollution et l'air", c: false, imageUrl: "https://images.pexels.com/photos/459728/pexels-photo-459728.jpeg" } // Image: Fumée d'usine.
                 ]},
                 { q: "L'environnement, c'est…", a: [
-                    { t: "Tout ce qui m'entoure", c: true, imageUrl: "https://picsum.photos/seed/entoure/200/200" }, // Image: Paysage à 360° (montagne, ville, mer).
-                    { t: "L'air", c: false, imageUrl: "https://picsum.photos/seed/air/200/200" } // Image: Ciel bleu avec des nuages.
+                    { t: "Tout ce qui m'entoure", c: true, imageUrl: "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg" }, // Image: Paysage à 360° (montagne, ville, mer).
+                    { t: "L'air", c: false, imageUrl: "https://images.pexels.com/photos/1115609/pexels-photo-1115609.jpeg" } // Image: Ciel bleu avec des nuages.
                 ]},
                 { q: "Le climat désigne :", a: [
-                    { t: "Les conditions de l'atmosphère dans une région donnée pendant une période donnée", c: true, imageUrl: "https://picsum.photos/seed/climat/200/200" }, // Image: Carte météo avec soleil, nuages, pluie.
-                    { t: "L'étude du temps", c: false, imageUrl: "https://picsum.photos/seed/temps/200/200" } // Image: Une horloge ou un calendrier.
+                    { t: "Les conditions de l'atmosphère dans une région donnée pendant une période donnée", c: true, imageUrl: "https://images.pexels.com/photos/76969/cold-front-warm-front-hurricane-felix-76969.jpeg" }, // Image: Carte météo avec soleil, nuages, pluie.
+                    { t: "L'étude du temps", c: false, imageUrl: "https://images.pexels.com/photos/359989/pexels-photo-359989.jpeg" } // Image: Une horloge ou un calendrier.
                 ]},
                 { q: "La mer est-elle un écosystème ?", a: [
-                    { t: "Oui", c: true, imageUrl: "https://picsum.photos/seed/mer-oui/200/200" }, // Image: Récif corallien plein de poissons.
-                    { t: "Non", c: false, imageUrl: "https://picsum.photos/seed/mer-non/200/200" } // Image: Un désert de sable.
+                    { t: "Oui", c: true, imageUrl: "https://images.pexels.com/photos/327533/pexels-photo-327533.jpeg" }, // Image: Récif corallien plein de poissons.
+                    { t: "Non", c: false, imageUrl: "https://images.pexels.com/photos/3825273/pexels-photo-3825273.jpeg" } // Image: Un désert de sable.
                 ]},
                 { q: "La faune se compose de :", a: [
-                    { t: "Les espèces animales vivant dans un espace géographique ou un habitat déterminé.", c: true, imageUrl: "https://picsum.photos/seed/faune/200/200" }, // Image: Plusieurs animaux différents (lion, oiseau, poisson).
-                    { t: "Tous Les omnivores exclusivement", c: false, imageUrl: "https://picsum.photos/seed/omnivore/200/200" } // Image: Un ours mangeant du poisson et des baies.
+                    { t: "Les espèces animales vivant dans un espace géographique ou un habitat déterminé.", c: true, imageUrl: "https://images.pexels.com/photos/33754715/pexels-photo-33754715.jpeg" }, // Image: Plusieurs animaux différents (lion, oiseau, poisson).
+                    { t: "Tous Les omnivores exclusivement", c: false, imageUrl: "https://images.pexels.com/photos/206716/pexels-photo-206716.jpeg" } // Image: Un ours mangeant du poisson et des baies.
                 ]},
                 { q: "La flore est constituée de :", a: [
-                    { t: "L'ensemble des espèces végétales indigènes ou subspontanées dans une région donnée, un milieu donné", c: true, imageUrl: "https://picsum.photos/seed/flore/200/200" }, // Image: Champ de fleurs sauvages variées.
-                    { t: "Tous les végétariens", c: false, imageUrl: "https://picsum.photos/seed/vegetarien/200/200" } // Image: Un lapin ou un panda.
+                    { t: "L'ensemble des espèces végétales indigènes ou subspontanées dans une région donnée, un milieu donné", c: true, imageUrl: "https://images.pexels.com/photos/808510/pexels-photo-808510.jpeg" }, // Image: Champ de fleurs sauvages variées.
+                    { t: "Tous les végétariens", c: false, imageUrl: "https://images.pexels.com/photos/2284166/pexels-photo-2284166.jpeg" } // Image: Un lapin ou un panda.
                 ]},
                 { q: "La pollution désigne :", a: [
-                    { t: "La dégradation de l'environnement par des substances ou des nuisances diverses", c: true, imageUrl: "https://picsum.photos/seed/degradation/200/200" }, // Image: Déchets plastiques sur une plage.
-                    { t: "Le sol qui craque sous nos pieds à cause des changements climatiques", c: false, imageUrl: "https://picsum.photos/seed/sol-craque/200/200" } // Image: Terre sèche et craquelée d'un désert.
+                    { t: "La dégradation de l'environnement par des substances ou des nuisances diverses", c: true, imageUrl: "https://images.pexels.com/photos/2409022/pexels-photo-2409022.jpeg" }, // Image: Déchets plastiques sur une plage.
+                    { t: "Le sol qui craque sous nos pieds à cause des changements climatiques", c: false, imageUrl: "https://images.pexels.com/photos/1097016/pexels-photo-1097016.jpeg" } // Image: Terre sèche et craquelée d'un désert.
                 ]}
             ]
         },
