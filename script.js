@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { t: "Le napoléon", c: false, imageUrl: "https://picsum.photos/seed/napoleon-poisson/200/200" } // Image: Le poisson napoléon aux couleurs vives.
                 ]},
                 { q: "Un masque chirurgical se détériore dans la nature au bout de combien d'années ?", a: [
-                    { t: "400 ans", c: true, imageUrl: "https://picsum.photos/seed/masque-400/200/200" }, // Image: Un masque usagé au sol.
+                    { t: "500 ans", c: true, imageUrl: "https://picsum.photos/seed/masque-400/200/200" }, // Image: Un masque usagé au sol.
                     { t: "10 ans", c: false, imageUrl: "https://picsum.photos/seed/masque-10/200/200" }, // Image: Un vieux morceau de plastique.
                     { t: "50 ans", c: false, imageUrl: "https://picsum.photos/seed/masque-50/200/200" } // Image: Une bouteille en plastique dégradée.
                 ]},
