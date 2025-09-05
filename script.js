@@ -1,13 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ====================================================================================
-    // MODIFIEZ L'URL DE L'IMAGE PAR DÉFAUT POUR LES RÉPONSES ICI
-    // Chaque réponse peut avoir sa propre URL en modifiant 'imageUrl' dans l'objet 'quizzes'
     const defaultImageUrl = "https://i.postimg.cc/Gp5Bnk0T/vrai-logo.jpg";
-    // ====================================================================================
 
     const quizzes = [
-        { // Quiz 0
+        {
             title: "Je Maîtrise les concepts",
             questions: [
                 { q: "L'écosystème est formé par :", a: [{ t: "La biocénose et le biotope", c: true }, { t: "La pollution et l'air", c: false }] },
@@ -19,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "La pollution désigne :", a: [{ t: "La dégradation de l'environnement par des substances ou des nuisances diverses", c: true }, { t: "Le sol qui craque sous nos pieds à cause des changements climatiques", c: false }] }
             ]
         },
-        { // Quiz 1
+        {
             title: "Protection de l'environnement et changements climatiques",
             questions: [
                 { q: "Selon le rapport du GIEC, l'augmentation de la température à la fin du XXIe siècle sera probablement supérieure à :", a: [{ t: "1,5°C par rapport à l'époque allant de 1850 à 1900", c: true }, { t: "6,5°C par rapport à l'époque allant de 1850 à 1900", c: false }] },
@@ -32,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "Quel gaz contribue à l'effet de serre ?", a: [{ t: "Ch4 (méthane)", c: true }, { t: "C9H10ClN5O2 (imidaclopride)", c: false }, {t: "C8H10ClN5O3S (thiaméthoxame)", c: false}] }
             ]
         },
-        { // Quiz 2
+        {
             title: "Soit l’acteur principal de ton environnement",
             questions: [
                 { q: "Quelle espèce est en voie de disparition à travers le monde ?", a: [{ t: "Le rhinocéros de Java", c: true }, { t: "La coccinelle du Botswanga", c: false }, { t: "La chauve-souris d'Etetak", c: false }]},
@@ -46,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "L'Amazone :", a: [{ t: "Est un fleuve d'Amérique du sud", c: true }, { t: "Est le deuxième plus grand fleuve du monde", c: false }, { t: "Prend sa source au Brésil", c: false }] }
             ]
         },
-        { // Quiz 3
+        {
             title: "Je deviens acteur de l'environnement",
             questions: [
                 { q: "La justice climatique désigne :", a: [{ t: "Les approches éthiques, morales, de justice et politique face au dérèglement climatique", c: true }, { t: "Les approches uniquement violentes ou physiques", c: false }] },
@@ -56,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "Les eaux internationales (ou haute mer) désignent les zones maritimes éloignées de la côte d'au moins :", a: [{ t: "200 milles nautiques", c: true }, { t: "100 milles nautiques", c: false }] }
             ]
         },
-        { // Quiz 4
+        {
             title: "Que disent les conventions sur l'environnement ?",
             questions: [
                 { q: "La convention de Bâle (1989) a été conçue afin de :", a: [{ t: "Contrôler les mouvements transfrontières de déchets dangereux", c: true }, { t: "Augmenter la circulation des déchets dangereux entre les pays", c: false }] },
@@ -71,26 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Variables d'état du jeu
     let currentQuizIndex = 0;
     let currentQuestionIndex = 0;
     let score = 0;
-    let answerSelected = false;
 
-    // Sélection des éléments du DOM
     const mainMenu = document.getElementById('main-menu');
     const quizView = document.getElementById('quiz-view');
     const scoreView = document.getElementById('score-view');
     const moduleCards = document.querySelectorAll('.module-card');
     const backToMenuBtn = document.getElementById('back-to-menu');
     const quizTitle = document.getElementById('quiz-title');
+    const questionContainer = document.getElementById('question-container');
     const questionText = document.getElementById('question-text');
     const answersContainer = document.getElementById('answers-container');
     const nextBtn = document.getElementById('next-btn');
     const finalScore = document.getElementById('final-score');
     const restartBtn = document.getElementById('restart-btn');
 
-    // --- Fonctions de navigation ---
     function showMainMenu() {
         mainMenu.classList.remove('hidden');
         quizView.classList.add('hidden');
@@ -113,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         finalScore.textContent = `${score} / ${quizzes[currentQuizIndex].questions.length}`;
     }
 
-    // --- Fonctions du Quiz ---
     function startQuiz(quizIndex) {
         currentQuizIndex = quizIndex;
         currentQuestionIndex = 0;
@@ -123,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayQuestion() {
-        answerSelected = false;
         const quiz = quizzes[currentQuizIndex];
         const question = quiz.questions[currentQuestionIndex];
 
@@ -131,13 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
         questionText.textContent = question.q;
         answersContainer.innerHTML = '';
         nextBtn.classList.add('hidden');
+        
+        questionContainer.classList.remove('fade-out');
+        answersContainer.classList.remove('fade-out');
 
         question.a.forEach(answer => {
             const button = document.createElement('button');
             button.classList.add('answer-btn');
             button.dataset.correct = answer.c;
             
-            // L'image peut être personnalisée pour chaque réponse via la propriété `imageUrl`
             const imageUrl = answer.imageUrl || defaultImageUrl;
 
             button.innerHTML = `
@@ -150,39 +143,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectAnswer(e) {
-        if (answerSelected) return;
-        answerSelected = true;
-
-        const selectedBtn = e.currentTarget;
-        const isCorrect = selectedBtn.dataset.correct === 'true';
-
-        if (isCorrect) {
-            score++;
-            selectedBtn.classList.add('correct');
-        } else {
-            selectedBtn.classList.add('incorrect');
-        }
-
         Array.from(answersContainer.children).forEach(button => {
-            if (button.dataset.correct === 'true' && !isCorrect) {
-                button.classList.add('correct');
-            }
-            button.style.pointerEvents = 'none'; // Désactiver les autres boutons
+            button.classList.remove('selected');
         });
 
+        const selectedBtn = e.currentTarget;
+        selectedBtn.classList.add('selected');
+        
         nextBtn.classList.remove('hidden');
     }
 
     function handleNextQuestion() {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < quizzes[currentQuizIndex].questions.length) {
-            displayQuestion();
-        } else {
-            showScoreView();
+        const selectedBtn = answersContainer.querySelector('.answer-btn.selected');
+        if (!selectedBtn) return;
+
+        const isCorrect = selectedBtn.dataset.correct === 'true';
+        if (isCorrect) {
+            score++;
         }
+        
+        questionContainer.classList.add('fade-out');
+        answersContainer.classList.add('fade-out');
+        
+        setTimeout(() => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizzes[currentQuizIndex].questions.length) {
+                displayQuestion();
+            } else {
+                showScoreView();
+            }
+        }, 300);
     }
 
-    // --- Écouteurs d'événements ---
     moduleCards.forEach(card => {
         card.addEventListener('click', () => {
             startQuiz(parseInt(card.dataset.quizIndex));
@@ -195,6 +187,5 @@ document.addEventListener('DOMContentLoaded', () => {
         startQuiz(currentQuizIndex);
     });
 
-    // Afficher le menu principal au chargement
     showMainMenu();
 });
