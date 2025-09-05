@@ -103,6 +103,15 @@ button:hover {
     margin: 0 auto;
 }
 
+#question-container, #answers-container {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
 #question-container {
     background-color: var(--white);
     padding: 30px;
@@ -130,14 +139,14 @@ button:hover {
     border: 2px solid var(--primary-green);
     border-radius: 15px;
     cursor: pointer;
-    color: var(--primary-green); /* <<< LIGNE AJOUTÉE */
-    font-weight: 600;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, border-color 0.3s;
     text-align: left;
     box-shadow: var(--shadow);
+    color: var(--primary-green);
+    font-weight: 600;
 }
 
-.answer-btn:hover {
+.answer-btn:hover:not(.selected) {
     background-color: #e8f5e9;
     transform: translateY(-2px);
 }
@@ -157,17 +166,8 @@ button:hover {
 
 .answer-btn.selected {
     background-color: var(--primary-yellow);
-    border-color: var(--primary-yellow);
-}
-
-.answer-btn.correct {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
-
-.answer-btn.incorrect {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    border-color: #d1cf3e;
+    transform: scale(1.02);
 }
 
 #next-btn {
