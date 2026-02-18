@@ -1,21 +1,272 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr-FR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Mur des Articles | Version API</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: transparent; }
-        #clock { font-size: 24px; font-weight: bold; color: #333; }
+        /* --- CHARTE GRAPHIQUE --- */
+        :root {
+            --bg-paper: #F9F7F2;
+            --text-ink: #1A1A1A;     
+            --accent-red: #B83A34;   
+            --text-grey: #555555;    
+            --line-color: #E0DBD0;   
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-paper);
+            color: var(--text-ink);
+            /* Effet de grain papier */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            font-size: 16px;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            color: var(--text-ink);
+            font-weight: 400;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* --- LOADER --- */
+        .loader-container {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 100px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            border-left-color: var(--accent-red);
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- SECTION "À LA UNE" --- */
+        .featured-section { margin-bottom: 60px; }
+        
+        .featured-card {
+            background: var(--bg-paper);
+            border: 1px solid var(--line-color);
+            display: flex; flex-direction: row; 
+            cursor: pointer; transition: all 0.4s ease;
+            position: relative; height: 350px; overflow: hidden;
+        }
+
+        .featured-card:hover {
+            box-shadow: 0 15px 35px rgba(26, 26, 26, 0.1);
+            border-color: var(--accent-red);
+            transform: translateY(-4px);
+        }
+
+        .featured-img-col {
+            width: 50%; position: relative; overflow: hidden;
+            border-right: 1px solid var(--line-color); background: #f0eeeb;
+        }
+
+        .featured-img-col img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: sepia(0.1) contrast(0.95); transition: transform 0.6s ease;
+        }
+
+        .featured-content-col {
+            width: 50%; padding: 40px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .featured-label {
+            text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px;
+            color: var(--accent-red); margin-bottom: 15px; font-weight: 700;
+        }
+
+        .featured-title {
+            font-size: 2.2rem; line-height: 1.2; margin-bottom: 15px; font-weight: 700;
+        }
+
+        .featured-desc {
+            font-size: 1.1rem; color: var(--text-grey);
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        /* --- GRILLE D'ARTICLES --- */
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px;
+        }
+
+        .card {
+            background: var(--bg-paper); border: 1px solid var(--line-color);
+            display: flex; flex-direction: column; cursor: pointer; transition: all 0.4s ease;
+        }
+        
+        .card:hover { 
+            transform: translateY(-8px); border-color: var(--accent-red);
+            box-shadow: 0 12px 24px rgba(26, 26, 26, 0.08);
+        }
+
+        .card-img-container {
+            width: 100%; height: 200px; overflow: hidden;
+            border-bottom: 1px solid var(--line-color); background: #f0eeeb;
+        }
+        
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .card:hover .card-img-container img { transform: scale(1.05); }
+
+        .card-body { padding: 25px; }
+        .card-date { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent-red); margin-bottom: 10px; font-size: 0.9rem; }
+        .card-title { font-size: 1.4rem; margin-bottom: 10px; font-weight: 600; line-height: 1.3; }
+        .card-desc-preview { font-size: 0.95rem; color: var(--text-grey); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- MODALE --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(249, 247, 242, 0.98); display: none;
+            justify-content: center; align-items: center; z-index: 1000; padding: 20px;
+        }
+        
+        .modal-box {
+            background: var(--bg-paper); border: 1px solid var(--line-color);
+            width: 100%; max-width: 800px; max-height: 90vh;
+            overflow-y: auto; position: relative; padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        
+        .modal-close { 
+            position: absolute; top: 20px; right: 20px; cursor: pointer; 
+            color: var(--accent-red); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        #v-desc::first-letter {
+            font-family: 'Playfair Display', serif; font-size: 3.5rem;
+            float: left; line-height: 0.8; padding-right: 12px; padding-top: 4px; color: var(--accent-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .featured-card { flex-direction: column; height: auto; }
+            .featured-img-col, .featured-content-col { width: 100%; }
+            .featured-img-col { height: 250px; }
+        }
     </style>
 </head>
 <body>
-    <div id="clock">00:00:00</div>
+
+    <div class="container">
+        <div id="loader" class="loader-container">
+            <div class="spinner"></div>
+            <p style="font-family:'Playfair Display'; font-style:italic;">Édition en cours...</p>
+        </div>
+        
+        <div id="featured-container" class="featured-section"></div>
+        <div id="grid" class="cards-grid"></div>
+    </div>
+
+    <div id="modal-view" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeModal()">Fermer ✕</div>
+            <div id="v-img-container"></div>
+            <div id="v-date" style="color:var(--accent-red); font-style:italic; margin-bottom:10px;"></div>
+            <h2 id="v-title" style="font-size:2.5rem; margin-bottom:20px; line-height:1.1;"></h2>
+            <div id="v-desc" style="white-space: pre-line; text-align: justify; font-size:1.15rem;"></div>
+        </div>
+    </div>
+
     <script>
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById('clock').textContent = timeString;
+        /**
+         * CONFIGURATION
+         * Remplace par l'URL de ton déploiement Apps Script (doGet renvoyant du JSON)
+         */
+        const API_URL = "https://script.google.com/macros/s/AKfycbwP_mfqY_V-q23bCeajm0nSOWL9kSFyq8w-lqZouPCCmsZEsBbVCmcuU_bbxj0KH2iBuQ/exec";
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                renderPage(data);
+            } catch (error) {
+                console.error("Erreur:", error);
+                document.getElementById('loader').innerHTML = "<p>Impossible de charger les articles. Vérifiez le déploiement Apps Script.</p>";
+            }
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+
+        function renderPage(data) {
+            document.getElementById('loader').style.display = 'none';
+            const grid = document.getElementById('grid');
+            const featuredContainer = document.getElementById('featured-container');
+            
+            if (!data || data.length === 0) {
+                grid.innerHTML = "<p>Aucun article trouvé.</p>";
+                return;
+            }
+
+            // 1. Article à la Une
+            renderFeatured(data[0], featuredContainer);
+
+            // 2. Reste de la grille
+            if (data.length > 1) {
+                data.slice(1).forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.onclick = () => openView(item);
+                    
+                    const img = item.photoId ? `<img src="https://drive.google.com/thumbnail?id=${item.photoId}&sz=w600" loading="lazy">` : `<div style="padding:40px;text-align:center;color:#ccc">Pas d'image</div>`;
+                    
+                    card.innerHTML = `
+                        <div class="card-img-container">${img}</div>
+                        <div class="card-body">
+                            <div class="card-date">${item.date}</div>
+                            <h3 class="card-title">${item.title}</h3>
+                            <div class="card-desc-preview">${item.description}</div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function renderFeatured(item, container) {
+            const img = item.photoId ? `<img src="https://drive.google.com/thumbnail?id=${item.photoId}&sz=w1000" loading="eager">` : '';
+            container.innerHTML = `
+                <div class="featured-card" onclick='openView(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
+                    <div class="featured-img-col">${img}</div>
+                    <div class="featured-content-col">
+                        <div class="featured-label">À la Une</div>
+                        <h2 class="featured-title">${item.title}</h2>
+                        <div class="featured-desc">${item.description}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openView(item) {
+            document.getElementById('v-title').innerText = item.title;
+            document.getElementById('v-date').innerText = "Publié le " + item.date;
+            document.getElementById('v-desc').innerText = item.description;
+            const imgContainer = document.getElementById('v-img-container');
+            imgContainer.innerHTML = item.photoId ? `<img src="https://drive.google.com/thumbnail?id=${item.photoId}&sz=w1200" style="width:100%; height:auto; margin-bottom:30px; border:1px solid var(--line-color);">` : '';
+            
+            document.getElementById('modal-view').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop scroll
+        }
+
+        function closeModal() {
+            document.getElementById('modal-view').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
     </script>
 </body>
 </html>
